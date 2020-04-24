@@ -1,4 +1,4 @@
-<div class="step-confirmation-w latepoint-step-content">
+<div class="step-confirmation-w latepoint-step-content" data-step-name="confirmation">
   <?php do_action('latepoint_step_confirmation_before', $booking); ?>
   <div class="confirmation-head-info">
     <?php do_action('latepoint_step_confirmation_head_info_before', $booking); ?>
@@ -28,20 +28,16 @@
   		  	<li><?php _e('Agent:', 'latepoint'); ?> <strong><?php echo $booking->agent->full_name; ?></strong></li>
         <?php } ?>
 		  	<li><?php _e('Service:', 'latepoint'); ?> <strong><?php echo $booking->service->name; ?></strong></li>
-        <?php do_action('latepoint_step_verify_appointment_info', $booking); ?>
+        <?php do_action('latepoint_step_confirmation_appointment_info', $booking); ?>
 		  </ul>
   	</div>
   	<div class="confirmation-customer-info">
 		  <h5 class="confirmation-section-heading"><?php _e('Customer Info', 'latepoint'); ?></h5>
 		  <ul>
-		  	<li><?php _e('Name:', 'latepoint'); ?> <strong><?php echo $customer->full_name; ?></strong></li>
-		  	<li><?php _e('Phone:', 'latepoint'); ?> <strong><?php echo $customer->formatted_phone; ?></strong></li>
+        <?php if($default_fields_for_customer['first_name']['active'] || $default_fields_for_customer['last_name']['active']) echo '<li>'.__('Name:', 'latepoint').'<strong>'.$customer->full_name.'</strong></li>'; ?>
+        <?php if($default_fields_for_customer['phone']['active']) echo '<li>'.__('Phone:', 'latepoint').'<strong>'.$customer->formatted_phone.'</strong></li>'; ?>
 		  	<li><?php _e('Email:', 'latepoint'); ?> <strong><?php echo $customer->email; ?></strong></li>
-        <?php if($custom_fields_for_customer){
-          foreach($custom_fields_for_customer as $custom_field){
-            echo '<li>'.$custom_field['label'].': <strong>'.$customer->get_meta_by_key($custom_field['id'], __('n/a', 'latepoint')).'</strong></li>';
-          }
-        } ?>
+        <?php do_action('latepoint_step_confirmation_customer_info', $customer, $booking); ?>
 		  </ul>
   	</div>
     <?php if(OsSettingsHelper::is_accepting_payments()){
@@ -80,5 +76,25 @@
     </p>
    <?php } ?>
   </div>
-  
+  <?php if($customer->is_guest && (OsSettingsHelper::get_settings_value('steps_hide_registration_prompt') != 'on')){ ?>
+    <div class="step-confirmation-set-password">
+      <div class="set-password-fields">
+        <?php echo OsFormHelper::password_field('customer[password]', __('Set Your Password', 'latepoint')); ?>
+        <a href="#" class="latepoint-btn latepoint-btn-primary set-customer-password-btn" data-btn-action="<?php echo OsRouterHelper::build_route_name('customers', 'set_account_password_on_booking_completion'); ?>"><?php _e('Save', 'latepoint'); ?></a>
+      </div>
+      <?php echo OsFormHelper::hidden_field('account_nonse', $customer->account_nonse); ?>
+    </div>
+    <div class="confirmation-cabinet-info">
+    	<div class="confirmation-cabinet-text"><?php _e('You can now manage your appointments in your personal cabinet', 'latepoint'); ?></div>
+    	<div class="confirmation-cabinet-link-w">
+    		<a href="<?php echo OsSettingsHelper::get_customer_dashboard_url(); ?>" class="confirmation-cabinet-link" target="_blank"><?php _e('Open My Cabinet', 'latepoint'); ?></a>
+    	</div>
+    </div>
+    <div class="info-box text-center">
+      <?php _e('Did you know that you can create an account to manage your reservations and schedule new appointments?', 'latepoint'); ?>
+      <div class="info-box-buttons">
+        <a href="#" class="show-set-password-fields"><?php _e('Create Account', 'latepoint'); ?></a>
+      </div>
+    </div>
+  <?php } ?>
 </div>

@@ -1,4 +1,4 @@
-<div class="step-verify-w latepoint-step-content">
+<div class="step-verify-w latepoint-step-content" data-step-name="verify">
   <div class="latepoint-step-content-text-left">
     <div><?php _e('Double check your booking information, you can go back to edit it or click submit button to confirm your booking.', 'latepoint'); ?></div>
   </div>
@@ -27,14 +27,10 @@
   	<div class="confirmation-customer-info">
 		  <h5 class="confirmation-section-heading"><?php _e('Customer Info', 'latepoint'); ?></h5>
 		  <ul>
-		  	<li><?php _e('Name:', 'latepoint'); ?> <strong><?php echo $customer->full_name; ?></strong></li>
-		  	<li><?php _e('Phone:', 'latepoint'); ?> <strong><?php echo $customer->formatted_phone; ?></strong></li>
+		  	<?php if($default_fields_for_customer['first_name']['active'] || $default_fields_for_customer['last_name']['active']) echo '<li>'.__('Name:', 'latepoint').'<strong>'.$customer->full_name.'</strong></li>'; ?>
+        <?php if($default_fields_for_customer['phone']['active']) echo '<li>'.__('Phone:', 'latepoint').'<strong>'.$customer->formatted_phone.'</strong></li>'; ?>
 		  	<li><?php _e('Email:', 'latepoint'); ?> <strong><?php echo $customer->email; ?></strong></li>
-        <?php if($custom_fields_for_customer){
-          foreach($custom_fields_for_customer as $custom_field){
-            echo '<li>'.$custom_field['label'].': <strong>'.$customer->get_meta_by_key($custom_field['id'], __('n/a', 'latepoint')).'</strong></li>';
-          }
-        } ?>
+        <?php do_action('latepoint_step_verify_customer_info', $customer, $booking); ?>
 		  </ul>
   	</div>
     <?php if(OsSettingsHelper::is_accepting_payments() && (($booking->full_amount_to_charge(false) > 0) || ($booking->deposit_amount_to_charge() > 0))){ ?>

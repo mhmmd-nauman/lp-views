@@ -55,15 +55,6 @@
         <li><span class="var-label"><?php _e('Full Address:', 'latepoint'); ?></span> <span class="var-code os-click-to-copy">{location_full_address}</span></li>
       </ul>
     </div>
-    <?php if(OsCustomFieldsHelper::get_custom_fields_arr('customer')){ ?>
-      <div class="available-vars-block">
-        <h4><?php _e('Custom Fields', 'latepoint'); ?></h4>
-        <ul>
-          <?php foreach(OsCustomFieldsHelper::get_custom_fields_arr('customer') as $custom_field){ ?>
-            <li><span class="var-label"><?php echo $custom_field['label']; ?></span> <span class="var-code os-click-to-copy">{<?php echo $custom_field['id']; ?>}</span></li>
-          <?php } ?>
-        </ul>
-      </div>
-    <?php } ?>
+    <?php do_action('latepoint_available_vars_after'); ?>
   </div>
 </div>
