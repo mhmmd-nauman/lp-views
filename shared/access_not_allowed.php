@@ -1,0 +1,1 @@
+<div class="latepoint-message latepoint-message-error"><?php _e('You are not allowed to access this page', 'latepoint'); ?></div>

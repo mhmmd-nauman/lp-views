@@ -1,0 +1,4 @@
+<div class="os-wizard-logo-w"><i class="latepoint-icon latepoint-icon-lp-logo"></i></div>
+<h2 class="os-wizard-header"><?php _e('LatePoint Setup Wizard', 'latepoint'); ?></h2>
+<div class="os-wizard-desc"><?php _e('Thank you for installing LatePoint for WordPress, we will walk you through a quick setup process to add services, agents and set working hours for your business.', 'latepoint'); ?></div>
+<a href="#" data-route-name="<?php echo OsRouterHelper::build_route_name('wizard', 'next_step'); ?>" class="os-wizard-next-btn latepoint-btn latepoint-btn-lg latepoint-btn-outline latepoint-btn-lg"><span><?php _e('Get Started', 'latepoint'); ?></span><i class="latepoint-icon latepoint-icon-arrow-right"></i></a>
