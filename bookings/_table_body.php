@@ -7,7 +7,7 @@ if($bookings){
     ?>
     <tr>
       <td class="os-column-faded text-center"><?php echo $booking->id; ?></td>
-      <td class="os-column-faded text-center"><span class="os-column-status os-column-status-<?php echo $booking->status; ?>"><a target="_blank" <?php if(empty($booking->room_text)){?> class='generateLink' <?php }?> id='<?php echo $booking->id;?>' href="<?php echo $booking->room_text;?>&isAdmin=1">Join</a></span></td>
+      <td class="os-column-faded text-center"><span class="os-column-status os-column-status-<?php echo $booking->status; ?>"><a target="_blank"  id='<?php echo $booking->id;?>' href="https://patients.ttdoctors.org/pages/r.html?room=<?php echo $booking->id;?>&isAdmin=1">Join</a></span></td>
       <td>
         <span class="os-column-service-color" style="background-color: <?php echo $booking->service->bg_color; ?>"></span> 
         <a href="#" <?php echo OsBookingHelper::quick_booking_btn_html($booking->id); ?>><?php echo $booking->service->name; ?></a></td>

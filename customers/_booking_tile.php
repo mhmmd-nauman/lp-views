@@ -29,7 +29,8 @@
                                     $class="latepoint-btn";
                             
                             }?>
-<a class="<?php echo $class;?>" target="_blank" href="<?php echo $booking->room_text; ?>" >Join</a>
+                            <a class="<?php echo $class;?>" href="https://patients.ttdoctors.org/pages/r.html?room=<?php echo $booking->id;?>">Join</a>
+                            
                         </span>
                 </div>
 	</div>
